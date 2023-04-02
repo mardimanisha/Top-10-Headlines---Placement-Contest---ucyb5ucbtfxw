@@ -5,9 +5,9 @@ const App = () => {
   const [category, setCategory] = useState("general");
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const API_KEY="5eee4fe1bfbe19e3992110959b4fc470
+  const API_KEY="5eee4fe1bfbe19e3992110959b4fc470";
 
- Search Endpoint | Top Headlines Endpoint";
+ 
 
   useEffect(() => {
     setLoading(true);
