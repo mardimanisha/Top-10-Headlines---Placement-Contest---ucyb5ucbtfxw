@@ -5,11 +5,31 @@ const App = () => {
   const [category, setCategory] = useState("general");
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState();
+  
+  useEffect(()=>{
+    async function fetchNews(){
+      try{
+      setLoading(true);
+      const response=await fetch(`https://gnews.io/api/v4/top-headlines?category=${category}&apikey=[API_KEY]&max=10&lang=en`);
+      
+      const data=await response.json();
+      setNewsData(data.articles);
+      setLoading(false);
+      }catch(err){
+        console.log(err);
+      }
+    }
+    fetchNews(); 
+  },[category])
+  
+  const handleCategoryChange=(event)=>{
+    setCategory(event.target.value);
+  }
 
   return (
     <div id="main">
       <h1 className='heading'>Top 10 {category} news.</h1>
-      <select value={category}>
+      <select value={category} onChange={handleCategoryChange}>
         <option value="general">General</option>
         <option value="business">Business</option>
         <option value="sports">Sports</option>
@@ -18,7 +38,8 @@ const App = () => {
         <option value="entertainment">Entertainment</option>
         <option value="science">Science</option>
       </select>
-      <p className='loader'>Loading...</p>
+
+{loading ? (<p className='loader'>Loading...</p>):(
       <ol>
         <li key="">
           <img className='news-img' src="" alt=""/>
@@ -31,6 +52,7 @@ const App = () => {
           </section>
         </li>
       </ol>
+     )}
     </div>
   )
 }
